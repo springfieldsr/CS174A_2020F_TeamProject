@@ -4,10 +4,9 @@ const {
     Vector, Vector3, vec, vec3, vec4, color, hex_color, Matrix, Mat4, Light, Shape, Material, Scene,
 } = tiny;
 
-class Cube_Single_Strip extends Shape {
+class Cube extends Shape {
     constructor() {
         super("positions", "normals");
-        // TODO (Extra credit part I)
         this.arrays.position = Vector3.cast(
         [-1, 1, -1], [-1, -1, -1], [-1, -1, 1], [-1, 1, 1], [1, 1, 1], [1, -1, 1], [1, -1, -1], [1, 1, -1]);
         this.arrays.normal = Vector3.cast(
@@ -19,27 +18,18 @@ class Cube_Single_Strip extends Shape {
 
 
 class Base_Scene extends Scene {
-    /**
-     *  **Base_scene** is a Scene that can be added to any display canvas.
-     *  Setup the shapes, materials, camera, and lighting here.
-     */
     constructor() {
-        // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
         super();
         this.hover = this.swarm = false;
-        // At the beginning of our program, load one of each of these shape definitions onto the GPU.
         this.shapes = {
-            'strip': new Cube_Single_Strip(),
+            'strip': new Cube(),
             'sphere': new defs.Subdivision_Sphere(4),
         };
         this.set_colors();
-        // *** Materials
         this.materials = {
             plastic: new Material(new defs.Phong_Shader(),
                 {ambient: .4, diffusivity: .6, color: hex_color("#ffffff")}),
         };
-        // The white material and basic shader are used for drawing the outline.
-        this.white = new Material(new defs.Basic_Shader());
     }
 
     display(context, program_state) {
@@ -61,14 +51,7 @@ class Base_Scene extends Scene {
     }
 }
 
-export class Assignment2 extends Base_Scene {
-
-    /**
-     * This Scene object can be added to any display canvas.
-     * We isolate that code so it can be experimented with on its own.
-     * This gives you a very small code sandbox for editing a simple scene, and for
-     * experimenting with matrix transformations.
-     */
+export class Pong extends Base_Scene {
      constructor() {
          super();
 
